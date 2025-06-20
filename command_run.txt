@@ -1,0 +1,45 @@
+(scrapyenv) PS D:\sir_asc\web scrapping\Manoj\Amzn Seller\source Code\AMAZON> history
+
+  Id CommandLine
+  -- -----------
+   1 try { . "c:\Users\WebDev\AppData\Local\Programs\cursor\resources\app\out\vs\workbench\contrib\terminal\common\scripts\shel... 
+   2 scrapy version
+   3 scrapy crawl amazon
+   4 python -m venv scrapyenv
+   5 scrapyenv\Scripts\activate
+   6 python -m pip install --upgrade pip
+   7 pip install scrapy
+   8 scrapy crawl spider_name
+   9 pip install scraper-api
+  10 pip crawl amazon
+  11 scrapy crawl amazon
+  12 pip install scraper-api
+  13 pip show scraper-api
+  14 scrapy crawl amazon
+  15 pip uninstall scraper-api
+  16 pip install scraperapi-sdk
+  17 pip show scraperapi-sdk
+  18 scrapy crawl amazon
+  19 pip install scraper_api
+  20 scrapy crawl amazon
+  21 pip uninstall scraper_api
+  22 pip install scraperapi-sdk
+  23 scrapy crawl amazon
+  24 scrapy crawl amazon
+  25 python --version
+  26 python -m pip show scraperapi-sdk
+  27 python -c "import scraperapi; print(scraperapi.__file__)"
+  28 python -m scrapy crawl amazon
+  29 pip list...
+  30 dir D:\sir_asc\web scrapping\Manoj\Amzn Seller\source Code\AMAZON\scrapyenv\Lib\site-packages\scraperapi_sdk*
+  31 python -m scrapy crawl amazon
+  32 python -m scrapy crawl amazon
+  33 python -m scrapy crawl amazon
+  34 python -m scrapy crawl amazon
+  35 python -m scrapy crawl amazon
+  36 python -m scrapy crawl amazon
+  37 python -m scrapy crawl amazon
+  38 python -m scrapy crawl amazon
+  39 python -m scrapy crawl amazon
+  40 python -m scrapy crawl amazon
+  41 python -m scrapy crawl amazon
