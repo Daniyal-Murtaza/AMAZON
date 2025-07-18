@@ -83,9 +83,19 @@ class AmazonSpider(scrapy.Spider):
             print('Output Results are saved into Results file =>', dat)
             self.csv_wr.writerow(dat)
 
+        # Get total number of offers from the element
+        total_offers_text = response.xpath('//*[@id="aod-filter-offer-count-string"]/text()').get()
+        if total_offers_text:
+            try:
+                total_offers = int("".join(filter(str.isdigit, total_offers_text)))
+                max_pages = (total_offers + 9) // 10  # Round up to get total pages
+            except:
+                max_pages = 1  # default fallback if parsing fails
+        else:
+            max_pages = 1  # default if element not found
+
         # Check for next page
-        show_more = response.xpath('//*[@id="aod-show-more-offers"]')
-        if show_more:
+        if pageno < max_pages:
             next_pageno = pageno + 1
             asin_num_clean = response.meta['asin_num']
             seller_url = f"https://www.amazon.com/gp/aod/ajax?filters=%257B%2522all%2522%253Atrue%252C%2522new%2522%253Atrue%257D&asin={asin_num_clean}&m=&qid=&smid=&sourcecustomerorglistid=&sourcecustomerorglistitemid=&sr=&pc=dp&pageno={next_pageno}"
@@ -94,6 +104,9 @@ class AmazonSpider(scrapy.Spider):
             rq.meta['Date_Time'] = Date_Time
             rq.meta['pageno'] = next_pageno
             yield rq
+        else:
+            print(f"Reached max page: {max_pages}, stopping.")
+
 
     def closed(self, reason):
         self.csv_file.close()
