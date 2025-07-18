@@ -40,15 +40,18 @@ class AmazonSpider(scrapy.Spider):
     def parse(self, response):
         Date_Time = response.meta['Date_Time']
         asin_num = response.meta['asin_num']
-        seller_url = f"https://www.amazon.com/gp/aod/ajax?filters=%257B%2522all%2522%253Atrue%252C%2522new%2522%253Atrue%257D&asin={asin_num}&m=&qid=&smid=&sourcecustomerorglistid=&sourcecustomerorglistitemid=&sr=&pc=dp"
+        pageno = 1  # Start from page 1
+        seller_url = f"https://www.amazon.com/gp/aod/ajax?filters=%257B%2522all%2522%253Atrue%252C%2522new%2522%253Atrue%257D&asin={asin_num}&m=&qid=&smid=&sourcecustomerorglistid=&sourcecustomerorglistitemid=&sr=&pc=dp&pageno={pageno}"
         rq = scrapy.Request(seller_url, callback=self.parse_seller)
         rq.meta['asin_num'] = asin_num
         rq.meta['Date_Time'] = Date_Time
+        rq.meta['pageno'] = pageno
         yield rq
         
     def parse_seller(self, response):
         Date_Time = response.meta['Date_Time']
         asin_num = '[' + response.meta['asin_num']
+        pageno = response.meta.get('pageno', 1)
         Date = datetime.now().strftime("%Y_%m_%d")
         Time = datetime.now().strftime("%H_%M_%S")
 
@@ -79,6 +82,18 @@ class AmazonSpider(scrapy.Spider):
 
             print('Output Results are saved into Results file =>', dat)
             self.csv_wr.writerow(dat)
+
+        # Check for next page
+        show_more = response.xpath('//*[@id="aod-show-more-offers"]')
+        if show_more:
+            next_pageno = pageno + 1
+            asin_num_clean = response.meta['asin_num']
+            seller_url = f"https://www.amazon.com/gp/aod/ajax?filters=%257B%2522all%2522%253Atrue%252C%2522new%2522%253Atrue%257D&asin={asin_num_clean}&m=&qid=&smid=&sourcecustomerorglistid=&sourcecustomerorglistitemid=&sr=&pc=dp&pageno={next_pageno}"
+            rq = scrapy.Request(seller_url, callback=self.parse_seller)
+            rq.meta['asin_num'] = asin_num_clean
+            rq.meta['Date_Time'] = Date_Time
+            rq.meta['pageno'] = next_pageno
+            yield rq
 
     def closed(self, reason):
         self.csv_file.close()
