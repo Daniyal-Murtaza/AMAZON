@@ -50,7 +50,7 @@ class AmazonSpider(scrapy.Spider):
         
     def parse_seller(self, response):
         Date_Time = response.meta['Date_Time']
-        asin_num = '[' + response.meta['asin_num']
+        asin_num = response.meta['asin_num']
         pageno = response.meta.get('pageno', 1)
         Date = datetime.now().strftime("%Y_%m_%d")
         Time = datetime.now().strftime("%H_%M_%S")
