@@ -9,7 +9,7 @@ from scrapy.utils.project import get_project_settings
 class AmazonSpider(scrapy.Spider):
     name = 'amazon'
     CSV_TITLE = [
-        "isbn", "Price", "Sold by", "Shipped by", "Position", "Buybox", "Date", "Time"
+        "isbn", "Price", "Sold by", "Shipped by", "Date", "Time"
     ]
     
     download_delay = 2.0
@@ -74,8 +74,6 @@ class AmazonSpider(scrapy.Spider):
                 price,
                 sold,
                 shipped_by,
-                position,
-                buybox,
                 Date,
                 Time,
             ]
